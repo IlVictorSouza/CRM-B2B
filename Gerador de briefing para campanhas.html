@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerador de Briefing - Grupo Rojemac</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+      background: #F5F5F5;
+      color: #333;
+    }
+
+    h1 {
+      color: #003366;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #003366;
+    }
+
+    select, input[type="text"], textarea, input[list] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      transition: border-color 0.3s ease;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      border-color: #FF6600;
+      outline: none;
+    }
+
+    .checkbox-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background-color 0.3s ease, transform 0.1s ease;
+    }
+
+    button:hover {
+      background-color: #00224d;
+      transform: scale(1.02);
+    }
+
+    .copy-btn {
+      background-color: #FF6600;
+    }
+
+    .copy-btn:hover {
+      background-color: #cc5200;
+    }
+
+    .output {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff;
+      border-radius: 6px;
+      border-left: 5px solid #FF6600;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    #colecaoExtra {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gerador de Briefing</h1>
+
+  <label for="solicitante">Solicitante:</label>
+  <select id="solicitante">
+    <option value="">Selecione</option>
+    <option>Marketing B2B</option>
+    <option>Mídia</option>
+    <option>Comercial</option>
+    <option>Trade Marketing</option>
+    <option>Eventos</option>
+  </select>
+
+  <label for="campanha">Campanha:</label>
+  <input list="campanhas" id="campanha" name="campanha" placeholder="Digite ou selecione a campanha">
+  <datalist id="campanhas">
+    <option value="ABCasa Fair">
+    <option value="Ano Novo">
+    <option value="Best Sellers">
+    <option value="Casacor">
+    <option value="Colecao">
+    <option value="Credix">
+    <option value="Dia das Maes">
+    <option value="Dia dos Pais">
+    <option value="Destino Italia">
+    <option value="Destino Japao">
+    <option value="Festival de Panelas">
+    <option value="Inverno">
+    <option value="Isso e Coisa de Novela">
+    <option value="Joao Ecodrop">
+    <option value="Lancamentos">
+    <option value="Leve + Pague -">
+    <option value="Multimix">
+    <option value="Natal">
+    <option value="Newsletter">
+    <option value="Pascoa">
+    <option value="Pesquisa de Satisfacao">
+    <option value="Politica Comercial">
+    <option value="Portal do Cliente">
+    <option value="Pre-Black Friday">
+    <option value="Pre-Feira">
+    <option value="Primavera">
+    <option value="Promocao do Mes">
+    <option value="Red Friday">
+    <option value="Representantes">
+    <option value="Retail Cast">
+    <option value="Rota do Vinho">
+    <option value="Sao Joao">
+    <option value="Showroom">
+    <option value="Verao">
+  </datalist>
+
+  <!-- Campo extra para Colecao -->
+  <div id="colecaoExtra">
+    <label for="colecaoTexto">Detalhe da Coleção:</label>
+    <input type="text" id="colecaoTexto" maxlength="100" placeholder="Máx. 100 caracteres">
+  </div>
+
+  <label>Canal:</label>
+  <div class="checkbox-group">
+    <label><input type="checkbox" value="E-mail marketing" class="canal"> E-mail marketing</label>
+    <label><input type="checkbox" value="WhatsApp" class="canal"> WhatsApp</label>
+  </div>
+
+  <label for="objetivo">Objetivo:</label>
+  <textarea id="objetivo" maxlength="500" placeholder="Máx. 500 caracteres" rows="4"></textarea>
+
+  <label for="quantidade">Quantidade de comunicações:</label>
+  <input type="text" id="quantidade" maxlength="2" placeholder="Ex: 02">
+
+  <label for="data">Data de envio:</label>
+  <input type="text" id="data" maxlength="200" placeholder="Ex: 20/09/2025">
+
+  <label for="gatilho">Gatilho psicológico:</label>
+  <select id="gatilho">
+    <option value="">Selecione</option>
+    <option>Urgência</option>
+    <option>Escassez</option>
+    <option>Prova social</option>
+    <option>Autoridade</option>
+    <option>Reciprocidade</option>
+    <option>Antecipação</option>
+  </select>
+
+  <label for="tom">Tom da comunicação:</label>
+  <select id="tom">
+    <option value="">Selecione</option>
+    <option>Informativo</option>
+    <option>Inspirador</option>
+    <option>Persuasivo</option>
+    <option>Divertido</option>
+    <option>Institucional</option>
+    <option>Empático</option>
+  </select>
+
+  <button onclick="gerarBriefing()">Gerar Briefing</button>
+
+  <div id="resultado" class="output" style="display:none;"></div>
+  <button id="copiarBtn" class="copy-btn" onclick="copiarTexto()" style="display:none;">Copiar texto</button>
+
+  <script>
+    const campanhaInput = document.getElementById('campanha');
+    const colecaoExtra = document.getElementById('colecaoExtra');
+
+    campanhaInput.addEventListener('input', () => {
+      if (campanhaInput.value.trim().toLowerCase() === 'colecao') {
+        colecaoExtra.style.display = 'block';
+      } else {
+        colecaoExtra.style.display = 'none';
+      }
+    });
+
+    function gerarBriefing() {
+      const solicitante = document.getElementById('solicitante').value;
+      const campanha = campanhaInput.value;
+      const colecaoTexto = document.getElementById('colecaoTexto').value;
+      const objetivo = document.getElementById('objetivo').value;
+      const quantidade = document.getElementById('quantidade').value;
+      const data = document.getElementById('data').value;
+      const gatilho = document.getElementById('gatilho').value;
+      const tom = document.getElementById('tom').value;
+      const canais = Array.from(document.querySelectorAll('.canal:checked')).map(el => el.value).join(" / ");
+
+      let campanhaFinal = campanha;
+      if (campanha.trim().toLowerCase() === 'colecao' && colecaoTexto) {
+        campanhaFinal += ` - ${colecaoTexto}`;
+      }
+
+      const texto = `
+- Solicitação de Briefing
+
+- Solicitante: ${solicitante}
+- Campanha: ${campanhaFinal}
+- Canal: ${canais}
+- Objetivo: ${objetivo}
+- Quantidade de comunicações: ${quantidade}
+- Data de envio: ${data}
+- Gatilho psicológico: ${gatilho}
+- Tom da comunicação: ${tom}
+      `.trim();
+
+      document.getElementById('resultado').textContent = texto;
+      document.getElementById('resultado').style.display = 'block';
+      document.getElementById('copiarBtn').style.display = 'inline-block';
+    }
+
+    function copiarTexto() {
+      const texto = document.getElementById('resultado').textContent;
+      navigator.clipboard.writeText(texto)
+        .then(() => alert('Texto copiado com sucesso!'))
+        .catch(err => alert('Erro ao copiar: ' + err));
+    }
+  </script>
+</body>
+</html>
