@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UTM Builder — Grupo Rojemac</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════════════
+     DESIGN TOKENS — BRAND GUIDE OFICIAL GRUPO ROJEMAC
+     Pantone 289U → #16243D  (azul noite)
+     Pantone 294U → #1D3663  (azul Rojemac principal)
+     Pantone 179-1U → #FBFBFB (off-white)
+     Paleta extendida: #1B1B1B, #005491, #0C6DAE, #2C99D5
+     ═══════════════════════════════════════════════════════ */
+  :root {
+    --rj-blue:        #1D3663;
+    --rj-blue-dark:   #16243D;
+    --rj-blue-mid:    #005491;
+    --rj-blue-light:  #0C6DAE;
+    --rj-blue-bright: #2C99D5;
+    --rj-white:       #FBFBFB;
+    --rj-gray-light:  #EBEBEB;
+    --rj-gray-mid:    #686868;
+    --rj-black:       #1B1B1B;
+    --bg:             #0D1520;
+    --bg-card:        #101C2E;
+    --bg-input:       rgba(255,255,255,0.04);
+    --border:         rgba(255,255,255,0.07);
+    --text-primary:   #EEF3FB;
+    --text-secondary: rgba(238,243,251,0.6);
+    --text-muted:     rgba(238,243,251,0.32);
+    --radius:         10px;
+    --radius-lg:      16px;
+    --radius-xl:      20px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Montserrat',sans-serif;
+    background:var(--bg);
+    color:var(--text-primary);
+    min-height:100vh;overflow-x:hidden;
+    background-image:
+      radial-gradient(ellipse 65% 45% at 95% 2%, rgba(29,54,99,.55) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 35% at 0% 95%, rgba(22,36,61,.6) 0%, transparent 55%);
+  }
+  ::-webkit-scrollbar{width:5px;height:5px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:rgba(29,54,99,.7);border-radius:3px}
+
+  /* ── HEADER ── */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(13,21,32,.93);
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    height:62px;display:flex;align-items:center;
+    padding:0 36px;justify-content:space-between;
+  }
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand-icon{
+    width:38px;height:38px;background:var(--rj-blue);
+    border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .brand-icon svg{width:24px;height:20px}
+  .brand-text{display:flex;flex-direction:column;gap:1px;line-height:1}
+  .brand-text .grupo{font-size:9.5px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-secondary)}
+  .brand-text .rojemac{font-size:17px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary)}
+  .header-sep{width:1px;height:26px;background:var(--border)}
+  .header-app-label{
+    font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--rj-blue-bright);padding:4px 10px;
+    border:1px solid rgba(44,153,213,.3);border-radius:5px;background:rgba(44,153,213,.07);
+  }
+  .header-right{display:flex;align-items:center;gap:12px}
+  .avatar{
+    width:30px;height:30px;border-radius:50%;
+    background:linear-gradient(135deg,var(--rj-blue-mid),var(--rj-blue));
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:700;color:white;border:2px solid rgba(255,255,255,.08);
+  }
+  .btn-sair{
+    display:flex;align-items:center;gap:6px;
+    font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;
+    color:var(--text-muted);padding:6px 14px;border-radius:7px;
+    border:1px solid var(--border);background:transparent;cursor:pointer;transition:all .2s;
+  }
+  .btn-sair:hover{color:var(--rj-blue-bright);border-color:rgba(44,153,213,.35)}
+
+  /* ── MAIN ── */
+  main{max-width:1220px;margin:0 auto;padding:44px 32px 80px}
+
+  /* ── PAGE HEAD ── */
+  .page-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:36px;animation:fadeUp .5s ease both}
+  .eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .eyebrow-bar{width:28px;height:3px;background:var(--rj-blue-light);border-radius:2px}
+  .eyebrow-text{font-size:10px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--rj-blue-bright)}
+  .page-title{font-size:28px;font-weight:800;color:var(--text-primary);letter-spacing:-.3px;text-transform:uppercase}
+  .page-title span{color:var(--rj-blue-bright)}
+  .page-sub{font-size:12.5px;font-weight:400;color:var(--text-muted);margin-top:6px}
+  .kpis{display:flex;gap:14px}
+  .kpi{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 22px;text-align:center;min-width:90px}
+  .kpi .n{font-size:26px;font-weight:800;color:var(--text-primary);line-height:1}
+  .kpi .l{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);margin-top:4px}
+
+  /* ── CARD ── */
+  .card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;margin-bottom:24px;animation:fadeUp .5s ease both}
+  .card-bar{height:3px;background:linear-gradient(90deg,var(--rj-blue-dark) 0%,var(--rj-blue) 35%,var(--rj-blue-light) 65%,var(--rj-blue-bright) 100%)}
+  .card-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 28px 18px;border-bottom:1px solid var(--border);
+    background:linear-gradient(to right,rgba(29,54,99,.12),transparent);
+  }
+  .card-tw{display:flex;align-items:center;gap:12px}
+  .card-ico{
+    width:38px;height:38px;
+    background:linear-gradient(135deg,rgba(29,54,99,.4),rgba(29,54,99,.15));
+    border:1px solid rgba(29,54,99,.45);border-radius:9px;
+    display:flex;align-items:center;justify-content:center;font-size:17px;
+  }
+  .card-title{font-size:14px;font-weight:800;color:var(--text-primary);letter-spacing:.5px;text-transform:uppercase}
+  .card-sub{font-size:11.5px;font-weight:400;color:var(--text-muted);margin-top:2px}
+
+  /* ── FORM ── */
+  .form-body{padding:28px 28px 0}
+  .form-full{margin-bottom:20px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+  .field{display:flex;flex-direction:column;gap:7px}
+  label{font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-muted);display:flex;align-items:center;gap:5px}
+  .req{color:var(--rj-blue-bright);font-size:11px}
+  .opt{font-size:8.5px;font-weight:600;letter-spacing:.5px;color:var(--text-muted);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:4px;padding:1px 6px;text-transform:none}
+  input[type="text"],input[type="url"],select{
+    width:100%;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius);
+    padding:11px 14px;font-family:'Montserrat',sans-serif;font-size:12.5px;font-weight:500;
+    color:var(--text-primary);outline:none;transition:all .2s;-webkit-appearance:none;
+  }
+  input::placeholder{color:var(--text-muted);font-weight:400}
+  input:focus,select:focus{border-color:var(--rj-blue-light);background:rgba(29,54,99,.12);box-shadow:0 0 0 3px rgba(12,109,174,.1)}
+  select{
+    cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='rgba(238,243,251,0.28)' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;
+  }
+  select option{background:#101C2E;color:var(--text-primary)}
+
+  .url-preview{
+    display:none;align-items:center;gap:10px;
+    margin:4px 28px 20px;padding:12px 16px;
+    background:rgba(29,54,99,.18);border:1px solid rgba(12,109,174,.28);border-radius:var(--radius);
+  }
+  .url-preview.on{display:flex}
+  .preview-tag{font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--rj-blue-bright);white-space:nowrap}
+  .preview-val{font-family:'Courier New',monospace;font-size:11.5px;color:var(--text-secondary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .btn-cp-prev{background:rgba(44,153,213,.1);border:1px solid rgba(44,153,213,.28);border-radius:6px;color:var(--rj-blue-bright);width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;transition:all .2s}
+  .btn-cp-prev:hover{background:rgba(44,153,213,.22)}
+
+  .form-foot{display:flex;align-items:center;justify-content:space-between;padding:20px 28px 28px}
+  .form-note{font-size:11.5px;font-weight:500;color:var(--text-muted);display:flex;align-items:center;gap:7px}
+  .form-note::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--text-muted);flex-shrink:0}
+
+  /* ── BTN PRIMARY ── */
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:8px;
+    background:linear-gradient(135deg,var(--rj-blue-light) 0%,var(--rj-blue) 100%);
+    color:white;font-family:'Montserrat',sans-serif;
+    font-size:12px;font-weight:700;padding:12px 28px;border-radius:var(--radius);
+    border:none;cursor:pointer;letter-spacing:.8px;text-transform:uppercase;
+    box-shadow:0 6px 20px rgba(12,109,174,.3);transition:all .25s;position:relative;overflow:hidden;
+  }
+  .btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,255,255,.12) 0%,transparent 60%);opacity:0;transition:opacity .2s}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(12,109,174,.45)}
+  .btn-primary:hover::after{opacity:1}
+  .btn-primary:active{transform:translateY(0)}
+
+  /* ── DIVIDER ── */
+  .divider{display:flex;align-items:center;gap:16px;margin:32px 0 24px;animation:fadeUp .5s .15s ease both}
+  .divider-line{flex:1;height:1px;background:var(--border)}
+  .divider-label{font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
+
+  /* ── TABLE ── */
+  .badge-count{display:inline-flex;align-items:center;background:rgba(29,54,99,.38);border:1px solid rgba(44,153,213,.22);border-radius:20px;padding:3px 10px;font-size:10.5px;font-weight:700;color:var(--rj-blue-bright);margin-left:10px}
+  .medium-chip{display:inline-block;background:rgba(29,54,99,.45);border:1px solid rgba(29,54,99,.7);color:#7DBDE8;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.5px}
+
+  .btn-export{
+    display:inline-flex;align-items:center;gap:7px;background:transparent;
+    border:1px solid rgba(255,255,255,.1);color:var(--text-secondary);
+    font-family:'Montserrat',sans-serif;font-size:10.5px;font-weight:700;
+    padding:9px 18px;border-radius:var(--radius);cursor:pointer;transition:all .2s;
+    letter-spacing:.6px;text-transform:uppercase;
+  }
+  .btn-export:hover{border-color:rgba(44,153,213,.4);color:var(--rj-blue-bright);background:rgba(44,153,213,.07)}
+
+  .filters{display:grid;grid-template-columns:1.5fr repeat(5,1fr) 130px;gap:10px;padding:16px 28px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.012)}
+  .fg{display:flex;flex-direction:column;gap:4px}
+  .fl{font-size:8.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);padding-left:1px}
+  .fi{background:rgba(255,255,255,.025)!important;border-color:rgba(255,255,255,.055)!important;padding:7px 10px!important;font-size:11.5px!important;border-radius:7px!important}
+  .fi:focus{border-color:rgba(12,109,174,.4)!important}
+
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse}
+  thead tr{background:rgba(255,255,255,.018)}
+  th{padding:12px 18px;font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-muted);text-align:left;white-space:nowrap;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;transition:color .15s}
+  th:hover{color:var(--text-primary)}
+  th .si{opacity:.3;font-size:8px;margin-left:4px}
+  tbody tr{border-bottom:1px solid rgba(255,255,255,.038);transition:background .15s}
+  tbody tr:last-child{border-bottom:none}
+  tbody tr:hover{background:rgba(29,54,99,.15)}
+  td{padding:13px 18px;font-size:12.5px;color:var(--text-secondary);white-space:nowrap}
+  .td-src{font-weight:700;color:var(--text-primary)}
+  .td-camp{max-width:210px;overflow:hidden;text-overflow:ellipsis;font-family:'Courier New',monospace;font-size:11.5px;color:rgba(238,243,251,.48)}
+  .td-link a{color:var(--rj-blue-bright);text-decoration:none;font-size:11.5px;max-width:200px;display:block;overflow:hidden;text-overflow:ellipsis}
+  .td-link a:hover{text-decoration:underline}
+  .td-date{font-size:11.5px;color:var(--text-muted);font-variant-numeric:tabular-nums}
+  .td-dash{color:var(--text-muted)}
+  .btn-cp{background:transparent;border:1px solid var(--border);color:var(--text-muted);width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .2s}
+  .btn-cp:hover{border-color:rgba(12,109,174,.4);color:var(--rj-blue-bright)}
+  .empty{text-align:center;padding:60px 20px;font-size:13px;color:var(--text-muted)}
+  .empty-icon{font-size:32px;margin-bottom:10px;opacity:.22}
+
+  /* ── TOAST ── */
+  .toast{
+    position:fixed;bottom:28px;right:28px;background:var(--bg-card);
+    border:1px solid rgba(12,109,174,.32);border-left:3px solid var(--rj-blue-light);
+    border-radius:var(--radius);padding:13px 20px;font-size:12.5px;font-weight:600;
+    color:var(--text-primary);box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:9999;
+    display:flex;align-items:center;gap:10px;max-width:340px;
+    transform:translateY(120%);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;
+  }
+  .toast.on{transform:translateY(0);opacity:1}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+  @media(max-width:900px){
+    .grid3{grid-template-columns:1fr 1fr}
+    .filters{grid-template-columns:1fr 1fr}
+    .kpis{display:none}
+    main{padding:24px 16px 60px}
+    header{padding:0 20px}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="brand">
+    <div class="brand-icon">
+      <!-- Coroa Rojemac SVG -->
+      <svg viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 17 L2 12 L7 5 L12 11 L17 5 L22 12 L22 17 Z" fill="white" opacity="0.12"/>
+        <path d="M22 17H2L5.5 7L12 13L18.5 7L22 17Z" fill="white" opacity="0.9"/>
+        <circle cx="2" cy="6" r="2" fill="white"/>
+        <circle cx="22" cy="6" r="2" fill="white"/>
+        <circle cx="12" cy="3" r="2" fill="white"/>
+        <path d="M2 6 L5.5 7" stroke="white" stroke-width="1.2" opacity="0.8"/>
+        <path d="M22 6 L18.5 7" stroke="white" stroke-width="1.2" opacity="0.8"/>
+        <path d="M12 3 L12 6" stroke="white" stroke-width="1.2" opacity="0.8"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <span class="grupo">Grupo</span>
+      <span class="rojemac">Rojemac</span>
+    </div>
+    <div class="header-sep"></div>
+    <span class="header-app-label">UTM Builder</span>
+  </div>
+  <div class="header-right">
+    <div class="avatar">MK</div>
+    <button class="btn-sair" onclick="alert('Saindo...')">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sair
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- Page Head -->
+  <div class="page-head">
+    <div>
+      <div class="eyebrow"><div class="eyebrow-bar"></div><span class="eyebrow-text">Marketing Digital</span></div>
+      <h1 class="page-title">Gerar Nova <span>UTM</span></h1>
+      <p class="page-sub">Crie links rastreáveis para suas campanhas digitais</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="n" id="kpi-total">2</div><div class="l">Links Gerados</div></div>
+      <div class="kpi"><div class="n">3</div><div class="l">Fontes Ativas</div></div>
+    </div>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="card">
+    <div class="card-bar"></div>
+    <div class="card-head">
+      <div class="card-tw">
+        <div class="card-ico">🔗</div>
+        <div><div class="card-title">Configurar Link</div><div class="card-sub">Preencha os parâmetros para gerar o link rastreado</div></div>
+      </div>
+    </div>
+
+    <div class="form-body">
+      <div class="form-full field">
+        <label>URL de Destino <span class="req">*</span></label>
+        <input type="url" id="url" placeholder="https://gruporojemac.com.br/pagina-de-destino" oninput="preview()">
+      </div>
+      <div class="grid3">
+        <div class="field">
+          <label>Origem <span class="req">*</span></label>
+          <select id="source" onchange="preview()">
+            <option value="">Selecione</option>
+            <option>google</option><option>facebook</option><option>instagram</option>
+            <option>linkedin</option><option>tiktok</option><option>email</option>
+            <option>whatsapp</option><option>youtube</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Mídia <span class="req">*</span></label>
+          <select id="medium" onchange="preview()">
+            <option value="">Selecione</option>
+            <option value="cpc">CPC — Pago por Clique</option><option value="email">E-mail</option>
+            <option value="social">Social Orgânico</option><option value="display">Display</option>
+            <option value="video">Vídeo</option><option value="influencer">Influenciador</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Fase do Funil <span class="req">*</span></label>
+          <select id="funil" onchange="preview()">
+            <option value="">Selecione</option>
+            <option value="topo">Topo de Funil</option><option value="meio">Meio de Funil</option><option value="fundo">Fundo de Funil</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid3">
+        <div class="field">
+          <label>Nome da Campanha <span class="req">*</span></label>
+          <input type="text" id="campaign" placeholder="ex: black-friday-2025" oninput="preview()">
+        </div>
+        <div class="field">
+          <label>Tipo de Campanha <span class="req">*</span></label>
+          <select id="ctype" onchange="preview()">
+            <option value="">Selecione</option>
+            <option value="search">Search</option><option value="shopping">Shopping</option>
+            <option value="remarketing">Remarketing</option><option value="prospecting">Prospecção</option><option value="awareness">Awareness</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Termo <span class="opt">opcional</span></label>
+          <input type="text" id="term" placeholder="ex: marketing-digital" oninput="preview()">
+        </div>
+      </div>
+      <div class="grid3" style="margin-bottom:0">
+        <div class="field">
+          <label>Grupo de Anúncios <span class="req">*</span></label>
+          <input type="text" id="adset" placeholder="ex: lookalike-founders" oninput="preview()">
+        </div>
+        <div class="field">
+          <label>Tipo do Anúncio <span class="req">*</span></label>
+          <select id="adtype" onchange="preview()">
+            <option value="">Selecione</option>
+            <option value="imagem">Imagem Estática</option><option value="video">Vídeo</option>
+            <option value="carrossel">Carrossel</option><option value="stories">Stories</option><option value="textual">Textual</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Nome do Anúncio <span class="req">*</span></label>
+          <input type="text" id="adname" placeholder="ex: cta-agende-demo" oninput="preview()">
+        </div>
+      </div>
+    </div>
+
+    <div class="url-preview" id="url-preview">
+      <span class="preview-tag">Preview</span>
+      <span class="preview-val" id="preview-val"></span>
+      <button class="btn-cp-prev" id="btn-cp-prev" onclick="copyPreview()" title="Copiar">📋</button>
+    </div>
+
+    <div class="form-foot">
+      <span class="form-note">Campos com * são obrigatórios</span>
+      <button class="btn-primary" onclick="generate()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Gerar UTM
+      </button>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><span class="divider-label">Histórico de Links</span><div class="divider-line"></div></div>
+
+  <!-- TABLE CARD -->
+  <div class="card" style="animation-delay:.12s">
+    <div class="card-bar"></div>
+    <div class="card-head">
+      <div class="card-tw">
+        <div class="card-ico">📊</div>
+        <div>
+          <div class="card-title">Links Gerados <span class="badge-count" id="badge">2 registros</span></div>
+          <div class="card-sub">Todos os links UTM gerados pela equipe</div>
+        </div>
+      </div>
+      <button class="btn-export" onclick="exportCSV()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Exportar Excel
+      </button>
+    </div>
+
+    <div class="filters">
+      <div class="fg"><span class="fl">Source</span><input class="fi" id="f0" placeholder="Filtrar..." oninput="filter()"></div>
+      <div class="fg"><span class="fl">Medium</span><input class="fi" id="f1" placeholder="Filtrar..." oninput="filter()"></div>
+      <div class="fg"><span class="fl">Campaign</span><input class="fi" id="f2" placeholder="Filtrar..." oninput="filter()"></div>
+      <div class="fg"><span class="fl">Adset</span><input class="fi" id="f3" placeholder="Filtrar..." oninput="filter()"></div>
+      <div class="fg"><span class="fl">Content</span><input class="fi" id="f4" placeholder="Filtrar..." oninput="filter()"></div>
+      <div class="fg"><span class="fl">Term</span><input class="fi" id="f5" placeholder="Filtrar..." oninput="filter()"></div>
+      <div class="fg"><span class="fl">Data</span><input class="fi" id="f6" placeholder="dd/mm/aaaa" oninput="filter()"></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Source <span class="si">↕</span></th><th>Medium <span class="si">↕</span></th>
+          <th>Campaign <span class="si">↕</span></th><th>Adset Name</th><th>Content</th>
+          <th>Term</th><th>Link</th><th>Data <span class="si">↕</span></th><th></th>
+        </tr></thead>
+        <tbody id="tbody">
+          <tr>
+            <td class="td-src">google</td>
+            <td><span class="medium-chip">cpc</span></td>
+            <td class="td-camp">google_cpc_topo_teste_search</td>
+            <td>geral</td><td>ad1</td><td class="td-dash">—</td>
+            <td class="td-link"><a href="#" title="google.com?utm_source=google&utm_medium=cpc&utm_campaign=google_cpc_topo_teste_search">google.com?utm_source=google…</a></td>
+            <td class="td-date">26/03/2026</td>
+            <td><button class="btn-cp" onclick="cp(this,'google.com?utm_source=google&utm_medium=cpc&utm_campaign=google_cpc_topo_teste_search&utm_content=ad1')">📋</button></td>
+          </tr>
+          <tr>
+            <td class="td-src">google</td>
+            <td><span class="medium-chip">cpc</span></td>
+            <td class="td-camp">google_cpc_fundo_teste-de-camp…</td>
+            <td>looklike_resp_conheca</td><td>looklike_resp…</td><td>marketing</td>
+            <td class="td-link"><a href="#" title="https://www.teste.com.br?utm_source=google">https://www.teste.com.br?utm_so…</a></td>
+            <td class="td-date">26/02/2026</td>
+            <td><button class="btn-cp" onclick="cp(this,'https://www.teste.com.br?utm_source=google&utm_medium=cpc&utm_campaign=google_cpc_fundo_teste&utm_term=marketing')">📋</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="empty" id="empty" style="display:none"><div class="empty-icon">🔍</div>Nenhum resultado encontrado com os filtros aplicados.</div>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"><span id="toast-msg">Feito!</span></div>
+
+<script>
+function v(id){return document.getElementById(id).value.trim()}
+function buildURL(){
+  const url=v('url'),src=v('source'),med=v('medium');
+  if(!url)return'';
+  const p=new URLSearchParams();
+  if(src)p.set('utm_source',src);
+  if(med)p.set('utm_medium',med);
+  if(v('campaign')){const fc=[src,med,v('funil'),v('campaign'),v('ctype')].filter(Boolean).join('_');p.set('utm_campaign',fc)}
+  const cont=[v('adset'),v('adtype')].filter(Boolean).join('_');
+  if(cont)p.set('utm_content',cont);
+  if(v('adname'))p.set('utm_ad',v('adname'));
+  if(v('term'))p.set('utm_term',v('term'));
+  return url+(url.includes('?')?'&':'?')+p.toString();
+}
+let _url='';
+function preview(){
+  _url=buildURL();
+  const el=document.getElementById('url-preview');
+  if(_url){document.getElementById('preview-val').textContent=_url;el.classList.add('on')}
+  else el.classList.remove('on');
+}
+function copyPreview(){
+  if(!_url)return;
+  navigator.clipboard?.writeText(_url).then(()=>{
+    document.getElementById('btn-cp-prev').textContent='✅';
+    setTimeout(()=>document.getElementById('btn-cp-prev').textContent='📋',1500);
+    toast('🔗 Link copiado!');
+  });
+}
+function generate(){
+  const req=['url','source','medium','funil','campaign','ctype','adset','adname'];
+  for(const id of req){if(!v(id)){toast('⚠️ Preencha todos os campos obrigatórios.');return}}
+  const utm=buildURL();
+  const src=v('source'),med=v('medium'),fun=v('funil'),camp=v('campaign'),ct=v('ctype');
+  const term=v('term'),adset=v('adset'),adt=v('adtype'),adn=v('adname');
+  const fullC=[src,med,fun,camp,ct].filter(Boolean).join('_');
+  const cont=[adset,adt].filter(Boolean).join('_');
+  const date=new Date().toLocaleDateString('pt-BR');
+  const tr=document.createElement('tr');
+  tr.innerHTML=`
+    <td class="td-src">${src}</td>
+    <td><span class="medium-chip">${med}</span></td>
+    <td class="td-camp" title="${fullC}">${fullC.substring(0,28)}${fullC.length>28?'…':''}</td>
+    <td>${adset.substring(0,18)}${adset.length>18?'…':''}</td>
+    <td>${cont.substring(0,18)}${cont.length>18?'…':''}</td>
+    <td class="${term?'':'td-dash'}">${term||'—'}</td>
+    <td class="td-link"><a href="${utm}" target="_blank" title="${utm}">${utm.substring(0,40)}…</a></td>
+    <td class="td-date">${date}</td>
+    <td><button class="btn-cp" onclick="cp(this,'${utm.replace(/'/g,"\\'")}')">📋</button></td>`;
+  document.getElementById('tbody').insertBefore(tr,document.getElementById('tbody').firstChild);
+  updateCount();
+  ['url','campaign','term','adset','adname'].forEach(id=>document.getElementById(id).value='');
+  ['source','medium','funil','ctype','adtype'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('url-preview').classList.remove('on');
+  navigator.clipboard?.writeText(utm).catch(()=>{});
+  toast('✅ UTM gerada e copiada para a área de transferência!');
+}
+function cp(btn,url){
+  navigator.clipboard?.writeText(url).then(()=>{btn.textContent='✅';toast('🔗 Link copiado!');setTimeout(()=>btn.textContent='📋',1500)})
+  .catch(()=>toast('⚠️ Não foi possível copiar automaticamente.'));
+}
+function filter(){
+  const fs=[0,1,2,3,4,5,6].map(i=>document.getElementById('f'+i).value.toLowerCase());
+  const rows=document.querySelectorAll('#tbody tr');let vis=0;
+  rows.forEach(row=>{
+    const tds=row.querySelectorAll('td');
+    const ok=tds[0].textContent.toLowerCase().includes(fs[0])&&tds[1].textContent.toLowerCase().includes(fs[1])&&tds[2].textContent.toLowerCase().includes(fs[2])&&tds[3].textContent.toLowerCase().includes(fs[3])&&tds[4].textContent.toLowerCase().includes(fs[4])&&tds[5].textContent.toLowerCase().includes(fs[5])&&tds[7].textContent.toLowerCase().includes(fs[6]);
+    row.style.display=ok?'':'none';if(ok)vis++;
+  });
+  document.getElementById('empty').style.display=vis===0?'block':'none';setCount(vis);
+}
+function updateCount(){setCount(document.querySelectorAll('#tbody tr').length)}
+function setCount(n){const t=n+' registro'+(n!==1?'s':'');document.getElementById('badge').textContent=t;document.getElementById('kpi-total').textContent=n}
+function exportCSV(){
+  const rows=document.querySelectorAll('#tbody tr');let csv='Source,Medium,Campaign,Adset Name,Content,Term,Link,Data\n';
+  rows.forEach(r=>{const t=r.querySelectorAll('td');const link=r.querySelector('a')?.href||'';csv+=[t[0].textContent,t[1].textContent,t[2].textContent,t[3].textContent,t[4].textContent,t[5].textContent,'"'+link+'"',t[7].textContent].join(',')+'\n'});
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='utm-rojemac-'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(a.href);
+  toast('📥 Arquivo exportado com sucesso!');
+}
+let _tt;
+function toast(msg){
+  const el=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;
+  el.classList.add('on');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('on'),3200);
+}
+</script>
+</body>
+</html>
